@@ -40,7 +40,7 @@ const EventSidebar = ({ events, openEventModal, setEvents }) => {
                 }
             }
             )
-            console.log(formatEvents)
+            
             setEvents(formatEvents)
         }
 
