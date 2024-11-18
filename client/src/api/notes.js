@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 
-const API_URL = import.meta.env.SERVER_URL+"/api"
+const API_URL = import.meta.env.VITE_SERVER_URL+"/api"
 
 
 // this function makes a get request to our api with the current logged in user's token
