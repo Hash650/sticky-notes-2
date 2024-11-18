@@ -43,7 +43,7 @@ export const updateNote = async (noteId, field, payload) => {
             }
         })
 
-        console.log('note updated successfully', response.data);
+        console.log('note updated successfully');
     }
     catch (err) {
         console.error('Error saving note:', err)
@@ -75,7 +75,7 @@ export const deleteNote = async (noteId) => {
 
     try {
         const response = await axios.delete(`${API_URL}/notes/${noteId}`)
-        console.log('Note deleted successfully', response.data)
+        console.log('Note deleted successfully')
     }
     catch (err) {
         console.error('Error deleting note:', err)
