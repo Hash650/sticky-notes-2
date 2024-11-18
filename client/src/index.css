@@ -32,7 +32,7 @@ body {
     height: 100vh;
     position: relative;
     overflow: auto;
-    background-image: url('./pattern.svg');
+    background-image: url('../public/pattern.svg');
 
 }
 
