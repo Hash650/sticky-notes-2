@@ -53,6 +53,70 @@ Follow these steps to download, set up, and run the Sticky Notes App locally.
 ```bash
 git clone https://github.com/your-username/sticky-notes-2.git
 cd sticky-notes-2
+```
+### 2️⃣ Backend Setup
+
+Navigate to the server directory:
+
+
+```
+cd server
+```
+Install dependencies:
+
+
+npm install
+Create a .env file in the server directory and add the following variables:
+```
+PORT=5000
+DATABASE_URL=your_postgresql_database_url
+JWT_SECRET=your_secret_key
+Start the backend server:
+```
+```
+npm start
+```
+###3️⃣ Frontend Setup
+Navigate to the client directory:
+
+```
+cd ../client
+```
+Install dependencies:
+```
+npm install
+```
+Create a .env file in the client directory and add:
+
+```
+REACT_APP_SERVER_URL=http://localhost:5000
+```
+Start the React app:
+
+```
+npm start
+```
+
+### 4️⃣ Open in Browser
+Frontend: Visit http://localhost:3000
+Backend: Visit http://localhost:5000/api to check the API.
+
+### 🌍 Deployment
+Backend:
+Push your backend code to GitHub.
+Connect your GitHub repo to Render.
+Set environment variables (same as your .env file).
+Frontend:
+Push your frontend code to GitHub.
+Deploy the frontend using Vercel.
+Update the REACT_APP_SERVER_URL to your Render backend URL.
+
+
+📧 Contact
+If you have any questions or feedback, feel free to reach out!
+
+Email: hashirahsan9@gmail.com
+
 
 
 
