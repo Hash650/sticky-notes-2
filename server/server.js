@@ -112,7 +112,7 @@ app.post("/api/resend-verification", async (req, res) => {
 
     const verificationString = crypto.randomBytes(32).toString("hex"); // Generate verification string
     const q = await pool.query("UPDATE users SET verification_token = $1 WHERE email = $2", [verificationString, email])
-    const verificationLink = `http://localhost:5000/verify?token=${verificationString}`
+    const verificationLink = `${process.env.SERVER_URL}/verify?token=${verificationString}`
     await sendVerificationEmail(email, verificationLink)
 
     res.status(202).json({ message: 'resent verification email' })
