@@ -3,38 +3,94 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import { useContext } from "react";
+import { resendVerificationEmail } from "../api/auth";
+import { Slide, toast } from "react-toastify";
 
 function LoginPage() {
 
-    const {isAuthenticated,login} = useContext(AuthContext)
+    const { isAuthenticated, login } = useContext(AuthContext)
     const [formData, setFormData] = useState({ email: '', password: '' })
     const [error, setError] = useState();
+    const [emailNotVerified, setEmailNotVerified] = useState(false);
+    const [loading, setLoading] = useState(false)
     const navigate = useNavigate();
 
-    useEffect(()=>{
+    useEffect(() => {
 
-        if(isAuthenticated)
-        {
+        if (isAuthenticated) {
             navigate('/')
         }
-    },[])
+    }, [])
 
     const handleChange = (e) => {
 
         setFormData({ ...formData, [e.target.name]: e.target.value })
     }
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            login(formData)
+    const showVerificationPopup = () => {
+        toast(`Resent verification request, please check your inbox to verify your email.`, {
+                    position: "top-center",
+                    autoClose: 3000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                    draggable: false,
+                    theme: "dark",
+                    transition: Slide,
+                    style: {
+                        backgroundColor: 'rgb(18, 18, 18)',
+                        color: 'rgba(206, 144, 225, 0.851)',
+                        border: '2px solid pink'
+                    },
+                });
+    }
+
+
+    const handleResend = async () => {
+
+        const email = formData.email;
+        if(email== '') // email field is empty when user asks for a new verification email
+        {
+            setError("Email field empty")
         }
-        catch (err) {
-            setError(err.message);
+        else
+        {
+            try
+            {
+                const res = await resendVerificationEmail(email)
+                console.log(res.message)
+                setEmailNotVerified(false) // hide the resend button
+                setError(null)
+                showVerificationPopup()
+            }
+            catch(err) 
+            {
+                setError('Error sending verification email')
+            }
         }
     }
 
-    const signupRedirect = (e) =>{
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            setLoading(true)
+            const response = await login(formData)
+            setLoading(false)
+            console.log(response)
+        }
+        catch (err) {
+            
+            setError(err.message);
+
+            if(err.message == "Please verify your email before logging in")
+            {
+                setEmailNotVerified(true);
+            }
+            setLoading(false)
+        }
+    }
+
+    const signupRedirect = (e) => {
         e.preventDefault();
         navigate('/signup')
     }
@@ -42,6 +98,15 @@ function LoginPage() {
 
     return (
         <div className="login-page">
+
+            <div className="welcome-box w-96">
+                <div>
+                    <h2>Welcome to StickyNotes!</h2>
+                </div>
+                <div>
+                    <p>Unleash your productivity with our dynamic sticky notes—drag, resize, and color-code your thoughts effortlessly. Stay on top of your tasks with event scheduling and never miss an important date. Organize, plan, and boost your workflow—all in one place! 💡🎯</p>
+                </div>
+            </div>
 
             {/* form has the handleSubmit method */}
             <form action="" method="post" onSubmit={handleSubmit} >
@@ -76,10 +141,22 @@ function LoginPage() {
                         </svg>
                         <input onChange={handleChange} type="password" name="password" id="" className="grow input-field" placeholder="Enter password" value={formData.password} />
                     </label>
-                    <button className="btn btn-login">Sign in</button>
+                    {
+                        loading ?
+                            <button className="btn btn-login">
+                                <l-helix
+                                    color={'rgba(206, 144, 225, 0.851)'}
+                                    size={30}
+                                    speed={2}
+                                >
+                                </l-helix>
+                            </button>
+                            : <button className="btn btn-login">Sign in</button>
+                    }
                     <div className="signup-redirect-text">
                         <p>Dont have an account? <a href="" className="signup-btn" onClick={signupRedirect}>sign up</a></p>
                         {error && <p className="error-message">{error}</p>}
+                        {emailNotVerified && <p><a onClick={handleResend} className="underline text-[#ce90e1] cursor-pointer">Resend</a> verification email?</p>}
                     </div>
                 </div>
             </form>

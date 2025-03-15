@@ -8,6 +8,7 @@ import NoteProvider from "./context/NoteContext"
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import { AuthProvider } from "./context/AuthContext"
+import VerificationConfirmationPage from "./pages/VerificationConfirmationPage"
 
 function App() {
   return (
@@ -15,8 +16,19 @@ function App() {
       <div id="app">
         <AuthProvider>
           <Routes>
-            <Route path='/login' element={<LoginPage />} />
-            <Route path='/signup' element={<SignupPage />} />
+            <Route path='/login' element={
+              <>
+              <ToastContainer />
+              <LoginPage />
+              </>
+              } />
+            <Route path='/verification-success' element={<VerificationConfirmationPage />} />
+            <Route path='/signup' element={
+              <>
+                <ToastContainer />
+                <SignupPage />
+              </>
+            } />
             <Route
               path='/'
               element={
@@ -36,12 +48,5 @@ function App() {
 
   )
 }
-{/* <div id="app">
-      <NotesPage />  
-      <LoginPage />
-       <SignupPage/> 
-      <Footer />
-    </div> */ }
-
 
 export default App

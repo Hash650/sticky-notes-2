@@ -162,62 +162,85 @@ function Note(props) {
 
 
     return (
-        <div className="note-card"
-
-
+        <div
+            className="note-card"
             ref={noteRef}
             style={{
-                backgroundColor: style.colorBody,
+                background: `linear-gradient(135deg, ${style.colorBody} 0%, ${style.colorHeader} 100%)`,
                 top: `${position.y}px`,
-                left: `${position.x}px`
+                left: `${position.x}px`,
+                borderRadius: "14px",
+                boxShadow: "0px 6px 12px rgba(0, 0, 0, 0.2)",
+                transition: "transform 0.2s ease-in-out",
             }}
         >
             <div
                 className="note-titlebar"
-                style={{ backgroundColor: style.colorHeader }}
+                style={{
+                    background: `linear-gradient(135deg, ${style.colorHeader} 0%, ${style.colorBody} 100%)`,
+                    borderTopLeftRadius: "14px",
+                    borderTopRightRadius: "14px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    padding: "10px 14px",
+                    boxShadow: "0px 2px 6px rgba(0, 0, 0, 0.1)",
+                }}
                 onMouseDown={mouseDown}
             >
-                <div className="title-box">
-                    {/* {title} */}
-                    <textarea
-                        name=""
-                        id="note-title"
-                        ref={titleAreaRef}
-                        defaultValue={noteTitle}
-                        onKeyDown={changeTitle}
-                        onKeyUp={handleKeyUp}
-                    >
-                    </textarea>
-                </div>
-
-                <div className="saveicon-deletebutton">
-
-                    {saving &&
-                        <l-helix
-                            size={27}
-                            speed={2}
-                            color={'black'}
-                        ></l-helix>
-                    }
+                <textarea
+                    id="note-title"
+                    ref={titleAreaRef}
+                    defaultValue={noteTitle}
+                    onKeyDown={changeTitle}
+                    onKeyUp={handleKeyUp}
+                    style={{
+                        fontSize: "1rem",
+                        fontWeight: "bold",
+                        border: "none",
+                        background: "transparent",
+                        width: "80%",
+                        resize: "none",
+                        outline: "none",
+                        color: style.colorText,
+                        textShadow: "0px 1px 1px rgba(0, 0, 0, 0.2)",
+                    }}
+                />
+                <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                    {saving && (
+                        <l-helix size="24" speed="1.8" color={style.colorText}></l-helix>
+                    )}
                     <DeleteButton noteId={props.note.id} />
                 </div>
             </div>
-            <div className="note-content">
+    
+            <div className="note-content" style={{ padding: "12px" }}>
                 <textarea
-                    onKeyUp={handleKeyUp}
+                    id="note-input"
                     ref={textAreaRef}
-                    onInput={() => { resize(textAreaRef) }}
-                    onFocus={() => { setZIndex(noteRef.current) }}
-                    name="" id="note-input"
                     defaultValue={body}
-                    style={{ color: style.colorText }}
-                >
-                </textarea>
-                
+                    onKeyUp={handleKeyUp}
+                    onInput={() => resize(textAreaRef)}
+                    onFocus={() => setZIndex(noteRef.current)}
+                    style={{
+                        color: style.colorText,
+                        width: "100%",
+                        background: "transparent",
+                        border: "none",
+                        fontSize: "1rem",
+                        resize: "none",
+                        outline: "none",
+                        padding: "6px",
+                        textShadow: "0px 1px 1px rgba(0, 0, 0, 0.2)",
+                    }}
+                />
             </div>
-            <NoteLock bgcolor={style.colorHeader} lockNote={setIsLocked}/>
+    
+            <NoteLock bgcolor={style.colorHeader} lockNote={setIsLocked} />
         </div>
-    )
+    );
+    
+    
 };
 
 export default Note;

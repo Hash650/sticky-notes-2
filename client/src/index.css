@@ -54,7 +54,7 @@ body {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    cursor: move;
+    cursor: grab;
     padding: 8px;
     padding-left: 5px;
     padding-right: 5px;
@@ -147,29 +147,90 @@ body {
 .login-page {
     height: 100vh;
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
     backdrop-filter: blur(2px);
     /* Apply blur to the whole page */
     z-index: 1;
 }
 
-.login-box {
+
+.welcome-box
+{
     height: 500px;
     /* align-items: center; */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     background-color: rgb(18, 18, 18);
-    display: flex;
+    /* display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: space-evenly; */
     padding: 20px;
     border: 2px solid #ab78c2;
     z-index: 2;
     /* Ensure the login card is above the blurred background */
 }
 
+.verification-msg-card
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: linear-gradient(135deg, #1a1a2e, #2c2c54); /* Gradient background */
+    border-radius: 12px; /* Smooth rounded corners */
+    padding: 20px; /* Add spacing */
+    box-shadow: 0 4px 15px rgba(171, 120, 194, 0.3); /* Soft glow effect */
+    border: 1px solid rgba(171, 120, 194, 0.4); 
+}
+
+
+
+.welcome-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: linear-gradient(135deg, #1a1a2e, #2c2c54); /* Gradient background */
+    border-radius: 12px; /* Smooth rounded corners */
+    padding: 20px; /* Add spacing */
+    box-shadow: 0 4px 15px rgba(171, 120, 194, 0.3); /* Soft glow effect */
+    border: 1px solid rgba(171, 120, 194, 0.4); /* Subtle border */
+    transition: transform 0.3s ease-in-out; /* Smooth hover effect */
+}
+
+.welcome-box:hover {
+    transform: scale(1.02); /* Slight zoom on hover */
+}
+
+.welcome-box h2 {
+    color: #c084fc; /* Soft purple text */
+    font-size: 1.5rem;
+    text-align: center;
+    font-weight: bold;
+}
+
+.welcome-box p {
+    color: #e0e0e0; /* Light grey text */
+    line-height: 2;
+    text-align: center;
+}
+
+
+.login-box {
+    height: 500px;
+    background: linear-gradient(135deg, #1a1a2e, #2c2c54); /* Gradient background */
+    border-radius: 12px; /* Smooth rounded corners */
+    padding: 20px; /* Add spacing */
+    box-shadow: 0 4px 15px rgba(171, 120, 194, 0.3); /* Soft glow effect */
+    border: 1px solid rgba(171, 120, 194, 0.4); /* Subtle border */
+    background-color: rgb(18, 18, 18);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    z-index: 2;
+    /* Ensure the login card is above the blurred background */
+}
+
 .login-box .box-title {
-    color: rgba(206, 144, 225, 0.851);
+    color: #c084fc;
     font-size: 30px;
 }
 
@@ -192,7 +253,7 @@ body {
 
 .error-message {
     /* background-color: #ffebee; */
-    color: #d32f2f;
+    color: #f58176;
     border: 1px solid #ef9a9a;
     border-radius: 4px;
     padding: 10px 15px;
@@ -204,7 +265,7 @@ body {
 }
 
 .error-message::before {
-    content: '⚠️';
+    content: '🫤';
     margin-right: 10px;
     font-size: 18px;
 }
@@ -235,12 +296,13 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    padding: 20px;
-    border: 2px solid #ab78c2;
     z-index: 2;
     gap: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    background-color: rgb(18, 18, 18);
+    background: linear-gradient(135deg, #1a1a2e, #2c2c54); /* Gradient background */
+    border-radius: 12px; /* Smooth rounded corners */
+    padding: 20px; /* Add spacing */
+    box-shadow: 0 4px 15px rgba(171, 120, 194, 0.3); /* Soft glow effect */
+    border: 1px solid rgba(171, 120, 194, 0.4); /* Subtle border */
 }
 
 .signup-box .box-title {

@@ -13,13 +13,19 @@ export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null)
     const navigate = useNavigate();
 
-    useEffect(() => {
-        checkAuthentication()
+    useEffect(() =>  {
+
+        const init = async () => {
+            
+            await checkAuthentication()
+        }
+
+        init();
     }, [])
 
     const login = async (formData) => {
 
-        setLoading(true)
+        // setLoading(true) debug
         try {
             const response = await loginUser(formData)
             localStorage.setItem('token', response.token)
@@ -30,17 +36,16 @@ export const AuthProvider = ({ children }) => {
 
         }
         catch (error) {
-            console.error('Login Failed:', error)
-            setLoading(false)
             throw error
+            // setLoading(false)
         }
-        setLoading(false)
+        // setLoading(false)  debug
     }
 
     const checkAuthentication = async () => {
 
 
-        setLoading(true)
+        // setLoading(true)
         const token = localStorage.getItem('token')
         const username = localStorage.getItem('username')
 
@@ -77,15 +82,23 @@ export const AuthProvider = ({ children }) => {
 
         // setLoading(true)
         try {
-            const response = await signupUser(formData)
-            localStorage.setItem('token', response.token)
-            localStorage.setItem('username', response.username)
 
-            setIsAuthenticated(true)
-            setUser(response.username)
-            navigate('/')
+            const response = await signupUser(formData)
+
+            const {data, status} = response
+            
+            if(data.token && data.username)
+            {
+                localStorage.setItem('token', data.token)
+                localStorage.setItem('username', data.username)
+                setUser(data.username)
+            }
+            
+
+            // setIsAuthenticated(true)
+            // navigate('/')
             // setLoading(false)
-            return response.username
+            return response
         }
         catch (error) {
             console.error('Signup failed', error)
