@@ -1,11 +1,16 @@
 import { AuthContext } from "../context/AuthContext";
 import { Navigate } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useLocation } from "react";
 
 const PrivateRoute = ({ children }) => {
 
     const { isAuthenticated } = useContext(AuthContext)
-    console.log(isAuthenticated)
+    const location = useLocation()
+
+    if (location.pathname === '/verification-success') {
+        return children; // Allow access to /verification-success without auth
+    }
+    // console.log(isAuthenticated)
     return isAuthenticated ? children : <Navigate to='/login' />
 };
 
